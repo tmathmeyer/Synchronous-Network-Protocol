@@ -1,9 +1,12 @@
-package edu.wpi.tmathmeyer.protocol;
+package edu.wpi.tmathmeyer.protocol.client;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.net.Socket;
+
+import edu.wpi.tmathmeyer.protocol.Logger;
+import edu.wpi.tmathmeyer.protocol.Packet;
 
 public class DataReciever implements Runnable{
 	

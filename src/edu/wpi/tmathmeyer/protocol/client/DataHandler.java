@@ -1,7 +1,9 @@
-package edu.wpi.tmathmeyer.protocol;
+package edu.wpi.tmathmeyer.protocol.client;
 
 import java.io.DataOutputStream;
 import java.net.Socket;
+
+import edu.wpi.tmathmeyer.protocol.Packet;
 
 
 public interface DataHandler extends Runnable{
