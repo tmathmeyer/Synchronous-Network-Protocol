@@ -62,7 +62,7 @@ public interface DataHandler extends Runnable{
 	
 	/**
 	 * 
-	 * @param b this method can be used by the client to get the packet header byte for any operation sans packet handling
+	 * @param o this method can be used by the client to get the packet header byte for any operation sans packet handling
 	 */
 	public void print(Object o);
 }
