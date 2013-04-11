@@ -5,6 +5,8 @@
   <property name="dist.dir" location="dist" />
   <property name="docs.dir" location="docs" />
 
+  <property name="lib.storage" location="D:\builds\java\syp" />
+
   <!-- Deletes the existing build, docs and dist directory-->
   <target name="clean">
     <delete dir="${build.dir}" />
@@ -34,11 +36,18 @@
                 <include name="**" />
            </fileset>
     </javadoc>
+    <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${lib.storage}\docs">
+      <!-- Define which files / directory should get included, we include all -->
+       <fileset dir="${src.dir}">
+                <include name="**" />
+           </fileset>
+    </javadoc>
   </target>
 
   <!--Creates the deployable jar file  -->
   <target name="jar" depends="compile">
     <jar destfile="${dist.dir}\SYP.ant.jar" basedir="${build.dir}"></jar>
+    <jar destfile="${lib.storage}\syp-1.0.0.ant.jar" basedir="${build.dir}"></jar>
   </target>
 
   <target name="main" depends="compile, jar, docs">
