@@ -4,8 +4,16 @@
   <property name="build.dir" location="build" />
   <property name="dist.dir" location="dist" />
   <property name="docs.dir" location="docs" />
+  <property name="lib.storage.windows" location="D:\builds\java\syp" />
+  <property name="lib.storage.linux" location="~/Builds/auto/syp" />
 
-  <property name="lib.storage" location="D:\builds\java\syp" />
+  <condition property="isWindows">
+    <os family="windows" />
+  </condition>
+
+  <condition property="isLinux">
+    <os family="unix" />
+  </condition>
 
   <!-- Deletes the existing build, docs and dist directory-->
   <target name="clean">
@@ -25,18 +33,21 @@
   <target name="compile" depends="clean, makedir">
     <javac srcdir="${src.dir}" destdir="${build.dir}">
     </javac>
-
   </target>
 
+  
+  
+  
+  
   <!-- Creates Javadoc -->
-  <target name="docs" depends="compile">
+  <target name="docs.windows" depends="compile" if="isWindows">
     <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${docs.dir}">
       <!-- Define which files / directory should get included, we include all -->
        <fileset dir="${src.dir}">
                 <include name="**" />
            </fileset>
     </javadoc>
-    <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${lib.storage}\docs">
+    <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${lib.storage.windows}\docs">
       <!-- Define which files / directory should get included, we include all -->
        <fileset dir="${src.dir}">
                 <include name="**" />
@@ -44,13 +55,39 @@
     </javadoc>
   </target>
 
-  <!--Creates the deployable jar file  -->
-  <target name="jar" depends="compile">
-    <jar destfile="${dist.dir}\SYP.ant.jar" basedir="${build.dir}"></jar>
-    <jar destfile="${lib.storage}\syp-1.0.0.ant.jar" basedir="${build.dir}"></jar>
+  <target name="docs.linux" depends="compile" if="isLinux">
+    <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${docs.dir}">
+      <!-- Define which files / directory should get included, we include all -->
+       <fileset dir="${src.dir}">
+                <include name="**" />
+           </fileset>
+    </javadoc>
+    <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${lib.storage.linux}\docs">
+      <!-- Define which files / directory should get included, we include all -->
+       <fileset dir="${src.dir}">
+                <include name="**" />
+           </fileset>
+    </javadoc>
   </target>
 
-  <target name="main" depends="compile, jar, docs">
+
+
+
+
+  <!--Creates the deployable jar file  -->
+  <target name="jar.windows" depends="compile" if="isWindows">
+    <jar destfile="${dist.dir}\SYP.ant.jar" basedir="${build.dir}"></jar>
+    <jar destfile="${lib.storage.windows}\syp-1.0.0.ant.jar" basedir="${build.dir}"></jar>
+  </target>
+
+  <target name="jar.linux" depends="compile" if="isLinux">
+    <jar destfile="${dist.dir}\SYP.ant.jar" basedir="${build.dir}"></jar>
+    <jar destfile="${lib.storage.linux}\syp-1.0.0.ant.jar" basedir="${build.dir}"></jar>
+  </target>
+
+
+
+  <target name="main" depends="compile, jar.linux, jar.windows, docs.linux, docs.windows">
     <description>Main target</description>
   </target>
 
