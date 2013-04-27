@@ -13,4 +13,7 @@ public class Logger {
 	public static Class<? extends Class> retrieve(byte ID){
 		return Logger.map.get(ID+"").getClass();
 	}
+	public boolean equals(Object o){
+		return (o instanceof Logger) && ((Logger)o).map.equals(map);
+	}
 }
